@@ -11,7 +11,18 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import(/* webpackChunkName: "login" */ '../views/RegisterView.vue'),
+    props: true
+  },
+  {
+    path: '/',
     name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
