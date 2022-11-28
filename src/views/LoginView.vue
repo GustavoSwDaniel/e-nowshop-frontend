@@ -5,14 +5,12 @@
 </template>
 
 <script>
-import LoginVue from '@/components/Login.vue';
 import SingInVue from '@/components/SingIn.vue';
 import RegisterVue from '@/components/Form/Register.vue';
 
 export default {
     name: 'LoginViews',
     components: {
-        LoginVue,
         SingInVue,
         RegisterVue
     }

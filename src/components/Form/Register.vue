@@ -69,6 +69,7 @@
 <script>
 import axios from "axios";
 
+
 export default {
     name: 'Register',
     data: () => {
@@ -89,8 +90,8 @@ export default {
         }
     },
     created() {
-        this.email = this.$route.params.data.email
-        this.name_user = this.$route.params.data.name
+        this.email = this.$router.options.history.state.email
+        this.name_user = this.$router.options.history.state.name
     },
     methods: {
         registerUser() {

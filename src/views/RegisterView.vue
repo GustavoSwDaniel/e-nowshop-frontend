@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-        <RegisterVue />
+        <RegisterVue :email="email" :name_user="name"/>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
     components: {
         RegisterVue
     }
-}
+  }
 </script>
 
 <style lang="scss">

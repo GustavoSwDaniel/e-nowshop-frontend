@@ -3,24 +3,13 @@
         <div class="container" :class="{ 'sign-up-active': singUp }">
             <div class="overlay-container">
                 <div class="overlay">
-                    <div class="overlay-left">
-                        <h2>Login de usuário</h2>
-                        <p>Faça o login com o seus dados</p>
-                        <button class="invert" id="singIn" @click="singUp = !singUp">Login</button>
-                    </div>
                     <div class="overlay-right">
                         <h2>Cadastrar</h2>
                         <p>Informe os dados para se registrar</p>
-                        <button class="invert" id="singUp" @click="singUp = !singUp" >Registrar</button>
+                        <button class="invert" id="singUp" v-on:click="changePage($event)">Registrar</button>
                     </div>
                 </div>
             </div>
-            <form class="sign-up" action="">
-                <h2>Register</h2>
-                <input v-model='register_name' type="text" placeholder="Name">
-                <input v-model='register_email' type="email" placeholder="Email">
-                <button @click="changePage($event)">Registrar</button>
-            </form>
             <form class="sign-in" action="">
                 <h2>Login</h2>
                 <input v-model='email' type="email" placeholder="Email">
@@ -68,7 +57,7 @@ export default {
         changePage(e){
             e.preventDefault();
 
-            this.$router.push({name: 'Register', params: {data: {email: this.register_email, name: this.register_name }}});
+            this.$router.push({name: 'Register'});
         }
     }
 }
@@ -93,9 +82,7 @@ export default {
         left: 50%;
         width: 50%;
         height: 100%;
-        overflow: hidden;
-        transition: transform .5s ease-in-out;
-        z-index: 100;
+
     }
 
     .overlay {
@@ -106,7 +93,6 @@ export default {
         background: linear-gradient(to bottom right, #832727, #b52525);
         color: #fff;
         transform: translateX(0);
-        transition: transform .5s ease-in-out;
     }
 
     @mixin overlays($property) {
@@ -120,8 +106,6 @@ export default {
         width: calc(50% - 80px);
         height: calc(100% - 140px);
         text-align: center;
-        transform: translateX($property);
-        transition: transform .5s ease-in-out;
     }
 
     .overlay-left {
@@ -222,56 +206,4 @@ form {
     }
 }
 
-.sign-in {
-    left: 0;
-    z-index: 2;
-}
-
-.sign-up {
-    left: 0;
-    z-index: 1;
-    opacity: 0;
-}
-
-.sign-up-active {
-    .sign-in {
-        transform: translateX(100%);
-    }
-
-    .sign-up {
-        transform: translateX(100%);
-        opacity: 1;
-        z-index: 5;
-        animation: show .5s;
-    }
-    .overlay-container {
-      transform: translateX(-100%);
-    }
-
-    .overlay {
-      transform: translateX(50%);
-    }
-
-    .overlay-left {
-      transform: translateX(0);
-    }
-    .overlay-right {
-      transform: translateX(20%);
-    }
-}
-
-@keyframes show {
-    0% {
-      opacity: 0;
-      z-index: 1;
-    }
-    49% {
-      opacity: 0;
-      z-index: 1;
-    }
-    50% {
-      opacity: 1;
-      z-index: 10;
-    }
-  }
 </style>

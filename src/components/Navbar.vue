@@ -43,6 +43,7 @@ export default {
     methods: {
         openDropDownMenu(){
             this.isOpen = !this.isOpen;
+            console.log('aberto')
         }
     }
 }
@@ -76,11 +77,13 @@ export default {
 }
 
 .navbar .menu-category {
-    position:relative;
+    display: inline-block;
+    position: absolute;
     margin-top: 2px;
     margin-left: 180px;
     width:max-content;
     background-color: rgba(235, 4, 4, 0.765);
+    z-index: 1000000;
 }
 
 .navbar ul {
