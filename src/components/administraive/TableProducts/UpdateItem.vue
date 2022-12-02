@@ -70,7 +70,6 @@ export default {
             }
             catch (error) {
                 this.login_error = true
-                console.log(error)
             };
         }
     }

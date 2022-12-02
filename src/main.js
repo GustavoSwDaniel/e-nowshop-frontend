@@ -11,13 +11,11 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 
 
-
-
-
-library.add(faBars, faList, faPeopleLine, faRightFromBracket, faCirclePlus, faArrowsRotate, faUsers)
+library.add(faBars, faList, faPeopleLine, faRightFromBracket, faCirclePlus, faArrowsRotate, faUsers, faUser)
 
 
 createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router).mount('#app')

@@ -4,8 +4,8 @@
             <div class="user-info">
                 <h3>Criar Conta</h3>
                 <form action="" id="user-data">
-                    <input type="text" placeholder="Nome" :value="this.name_user">
-                    <input type="email" placeholder="Email" :value="this.email">
+                    <input v-model="name_user" type="text" placeholder="Nome">  
+                    <input v-model="email" type="email" placeholder="Email" >
                     <input v-model="last_name" type="text" placeholder="Sobrenome">
                     <input v-model="cpf" type="text" placeholder="Cpf">
                     <input v-model="password" type="Password" placeholder="Senha">
@@ -59,6 +59,9 @@
             <div class="buttom-reg">
                 <button v-on:click="registerUser($event)">Registrar</button>
             </div>
+            <div v-show="regiter_error" class="register_error">
+                    <p class="register_error_msg">Todos os campos devem ser preenchidos</p>
+            </div>
             <div class="link-login">
                 <p>Ja possui cadastra? <a href="/login">ENTRAR</a></p>
             </div>
@@ -87,14 +90,14 @@ export default {
             'state': '',
             'village': '',
             'complement': '',
+            regiter_error: false
         }
-    },
-    created() {
-        this.email = this.$router.options.history.state.email
-        this.name_user = this.$router.options.history.state.name
     },
     methods: {
         registerUser() {
+            if (!(this.email, this.last_name, this.name_user, this.cpf, this.phone_type, this.phone_number, this.password, this.street, this.cep, this.city, this.state, this.village, this.complement))
+                this.regiter_error = true
+
             let register_data = {
                 name: this.name_user,
                 last_name: this.last_name,
@@ -116,9 +119,6 @@ export default {
                 },
                 password: this.password
             }
-            
-            console.log(register_data)
-
 
             axios.post("http://localhost:8081/users", register_data, { headers: { "Access-Control-Allow-Origin": "*", } })
                 .then((res) => {
@@ -206,7 +206,6 @@ button {
 }
 
 .buttom-reg {
-
     display: flex;
     justify-content: center;
     align-content: center;
@@ -227,6 +226,22 @@ button {
 
 
 .link-login {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.register_error_msg {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    margin: 0;
+    font-weight: bold;
+    margin-bottom: 20px;
+    
+}
+
+.register_error{
     display: flex;
     justify-content: center;
     align-content: center;

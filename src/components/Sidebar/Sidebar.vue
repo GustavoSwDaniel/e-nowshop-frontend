@@ -131,10 +131,7 @@ export default {
           eventOpen: {open: 'Employee'}
         }
       )
-      console.log(this.isManager)
     }
-    console.log(this.isManager)
-
   },
   computed: {
     cssVars() {

@@ -26,7 +26,7 @@ import axios from "axios";
 
 export default {
     name: "EmployeeLogin",
-    ata: () => {
+    data: () => {
         return {
             'email': '',
             'password': '',
@@ -49,6 +49,7 @@ export default {
                 })
                 .catch((error) => {
                     this.login_error = true
+                    console.log("test")
                 });
         },
     }
@@ -124,5 +125,13 @@ label {
 
 .btn-login:hover {
     background-color: #ab0000;
+}
+
+.invalid_user_or_password {
+    font-size: 13px;
+    color: red;
+    margin: 0;
+    margin-bottom: 20px;
+    
 }
 </style>>

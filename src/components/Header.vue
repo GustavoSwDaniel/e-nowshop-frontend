@@ -7,9 +7,33 @@
                 </router-link>
                 <SearchBarVue />
                 <div class="user">
-                    <button class="btn-user" @click="changePage($event)">
-                        Entrar ou Cadastrar
-                    </button>
+                    <div class="logged" v-if="(isLogged == true)">
+                        <button class="btn-user-logged">
+                            <div class="container">
+                                <font-awesome-icon icon="fa-regular fa-user" size="2x" />
+                                <div class="text">
+                                    <div class="main-text">
+                                        <p>Olá, {{ this.name }}</p>
+                                    </div>
+                                    <div class="sub_tex">
+                                        <p>Ver perfil </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                        <div class="logout">
+                            <a href="google.com">
+                                sair
+                                <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="loggin" v-if="(isLogged == false)">
+                        <button class="btn-user" @click="changePage($event)">
+                            Entrar ou Cadastrar
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -21,6 +45,8 @@
 <script>
 import SearchBarVue from './SearchBar.vue';
 import NavbarVue from './Navbar.vue';
+import Cookie from 'js-cookie'
+
 
 export default {
     name: "Header",
@@ -28,11 +54,26 @@ export default {
         SearchBarVue,
         NavbarVue
     },
+    data: () => {
+        return {
+            isLogged: false,
+            name: ''
+        }
+    },
     methods: {
         changePage(e) {
             e.preventDefault();
-
             this.$router.push({ name: 'login' });
+        },
+        test() {
+            console.log('test')
+        }
+    },
+    mounted() {
+        if (Cookie.get('token')) {
+            this.name = Cookie.get('name')
+            this.isLogged = true
+            console.log("ALO")
         }
     }
 }
@@ -42,10 +83,10 @@ export default {
 <style scoped>
 #main-header {
     background-color: #832727;
-    padding: 15px 
+    padding: 15px
 }
 
-#main-header .header{
+#main-header .header {
     display: flex;
     justify-content: space-around;
     margin-left: 15%;
@@ -94,4 +135,34 @@ export default {
     color: rgb(221, 221, 221);
 }
 
+.btn-user-logged {
+    padding: 15% 10px;
+    width: 99%;
+    background-color: transparent;
+    font-size: 15px;
+    border: 0px;
+    color: #ffffff;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.text {
+    display: flex;
+    justify-items: end;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 10%;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+}
+
+.logout{
+    font-size: 15px;
+
+}
 </style>

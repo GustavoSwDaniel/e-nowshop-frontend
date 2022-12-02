@@ -66,7 +66,6 @@ export default {
             try {
                 let response = await axios.get("http://localhost:8081/products?order_by=created_at", { headers: { "Access-Control-Allow-Origin": "*", } })
                 this.productsData = response.data
-                console.log(this.productsData)
 
             }
             catch (error) {

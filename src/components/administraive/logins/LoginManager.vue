@@ -26,10 +26,10 @@ import axios from "axios";
 
 export default {
     name: "ManagerLogin",
-    Data() {
+    data: () => {
         return {
-            email: '',
-            password: '',
+            'email': '',
+            'password': '',
             login_error: false
         }
     },
@@ -124,6 +124,14 @@ label{
 
 .btn-login:hover{
     background-color: #ab0000;
+}
+
+.invalid_user_or_password {
+    font-size: 13px;
+    color: red;
+    margin: 0;
+    margin-bottom: 20px;
+    
 }
 
 </style>>

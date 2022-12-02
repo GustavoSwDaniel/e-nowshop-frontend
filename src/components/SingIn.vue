@@ -26,6 +26,8 @@
 
 <script>
 import axios from "axios";
+import Cookie from 'js-cookie'
+
 
 export default {
     name: 'SingIn',
@@ -47,7 +49,13 @@ export default {
             axios.post("http://localhost:8081/user/auth", user_data, { headers: { "Access-Control-Allow-Origin": "*", } })
             .then((res) => {
                 this.login_error = false
-                    console.log(res.data.access_token)
+                    Cookie.set('token', res.data.access_token)
+                    Cookie.set('refresh_token', res.data.refresh_token)
+                    Cookie.set('expires_in', res.data.expires_in)
+                    Cookie.set('uuid', res.data.uuid)
+                    Cookie.set('name', res.data.name)
+                    this.$router.push({name: 'home'});
+
             })
             .catch((error) => {
                 this.login_error = true

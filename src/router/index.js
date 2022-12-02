@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import Cookie from 'js-cookie'
+
 
 const routes = [
   {
@@ -32,7 +34,15 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdministrativeView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdministrativeView.vue'),
+    beforeEnter(to, from, next) {
+      console.log(Cookie.get('role'))
+      if (!(Cookie.get('token'))) {
+        console.log('test')
+        next('/administrative/login')
+      }
+      next()
+    }
   },
   {
     path: '/administrative/login',
@@ -49,6 +59,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/LoginEmployeeView.vue')
+  },
+  {
+    path: '/switch/login',
+    name: 'switch-login',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginSwitch.vue')
   },
   {
     path: '/switch/login',
