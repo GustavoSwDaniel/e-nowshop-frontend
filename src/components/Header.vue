@@ -1,43 +1,47 @@
 <template>
     <div class="">
-        <div id="main-header">
-            <div class="header">
-                <router-link to="/" id="logo-url">
-                    <img src="/img/logo.png" alt="alt" id="logo">
-                </router-link>
-                <SearchBarVue />
-                <div class="user">
-                    <div class="logged" v-if="(isLogged == true)">
-                        <button class="btn-user-logged">
-                            <div class="container">
-                                <font-awesome-icon icon="fa-regular fa-user" size="2x" />
-                                <div class="text">
-                                    <div class="main-text">
-                                        <p>Olá, {{ this.name }}</p>
-                                    </div>
-                                    <div class="sub_tex">
-                                        <p>Ver perfil </p>
+        <section class="hero is-primary" id="main-header">
+            <div class="hero-body">
+                <div class="header">
+                    <router-link to="/" id="logo-url">
+                        <figure class="image is-128x128">
+                            <img src="/img/logo.png">
+                        </figure>
+                    </router-link>
+                    <SearchBarVue class="search"/>
+                    <div class="user">
+                        <div class="logged" v-if="(isLogged == true)">
+                            <button class="btn-user-logged">
+                                <div class="container">
+                                    <font-awesome-icon icon="fa-regular fa-user" size="2x" />
+                                    <div class="text">
+                                        <div class="main-text">
+                                            <p>Olá, {{ this.name }}</p>
+                                        </div>
+                                        <div class="sub_tex">
+                                            <p>Ver perfil </p>
 
+                                        </div>
                                     </div>
                                 </div>
+                            </button>
+                            <div class="logout">
+                                <a href="google.com">
+                                    sair
+                                    <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+                                </a>
                             </div>
-                        </button>
-                        <div class="logout">
-                            <a href="google.com">
-                                sair
-                                <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
-                            </a>
                         </div>
-                    </div>
-                    <div class="loggin" v-if="(isLogged == false)">
-                        <button class="btn-user" @click="changePage($event)">
-                            Entrar ou Cadastrar
-                        </button>
+                        <div class="loggin" v-if="(isLogged == false)">
+                            <button class="btn-user" @click="changePage($event)">
+                                Entrar ou Cadastrar
+                            </button>
+                            <img src="../assets/user-icon.svg" alt="" srcset="">
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </section>
         <NavbarVue />
     </div>
 </template>
@@ -73,7 +77,6 @@ export default {
         if (Cookie.get('token')) {
             this.name = Cookie.get('name')
             this.isLogged = true
-            console.log("ALO")
         }
     }
 }
@@ -86,6 +89,12 @@ export default {
     padding: 15px
 }
 
+.loggin {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 #main-header .header {
     display: flex;
     justify-content: space-around;
@@ -93,6 +102,7 @@ export default {
     margin-right: 15%;
 
 }
+
 
 #main-header #logo-url {
     margin: auto;
@@ -121,7 +131,7 @@ export default {
     padding: 15% 10px;
     line-break: loose;
     width: 99%;
-    background: transparent url("/src/assets/user-icon.svg") no-repeat 15px center;
+    background: transparent;
     background-size: 28px 28px;
     background-position: 10px;
     font-size: 15px;
@@ -161,8 +171,35 @@ export default {
     white-space: nowrap;
 }
 
-.logout{
+.logout {
     font-size: 15px;
+}
 
+@media screen and (max-width: 1024px) {
+    .loggin {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    #main-header .header{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    #main-header #logo-url {
+    margin: auto;
+    /* margin-left: 0; */
+}
+    .loggin {
+        display: none;
+    }
+
+    #main-header .btn-user {
+        padding: 0;
+    }
 }
 </style>

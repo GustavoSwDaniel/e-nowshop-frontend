@@ -1,106 +1,71 @@
-<template>
-    <div class="navbar">
-        <div class="bar">
-            <button class="category" @click.stop.prevent="openDropDownMenu()">
-                Categorias
-            </button>
-            <butttonBarVue v-for="(item, index) in navbarItens" v-bind:key="index" :btnText='item'/>
-        </div>
-            
-        <div class="menu-category" v-show="isOpen">
-            <div class="menu">
-                <ul>
-                    <li>Eletronica</li>
-                    <li>Eletronica</li>
-                    <li>Eletronica</li>
-                    <li>Eletronica de computadores</li>
-                    <li>Eletronica</li>
-                    <li>Eletronica</li>
-                    <li>Eletronica</li>
-                    <li>Eletronica</li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
+<template lang="pug">
+nav.navbar(id="navbar" role="navigation" aria-label="main navigation")
+  div.navbar-brand
+    button.navbar-burger.burger(
+      type="button" 
+      aria-label="menu" 
+      aria-expanded="false" 
+      :class="{ 'is-active': showBurgerMenu }" 
+      @click="showBurgerMenu = !showBurgerMenu" 
+      data-target="navbarExampleTransparentExample"
+    )
+      span(aria-hidden="true")
+      span(aria-hidden="true")
+      span(aria-hidden="true")
+  div.navbar-menu(
+    id="navbarExampleTransparentExample" 
+    :class="{ 'is-active': showBurgerMenu }"
+  )
+    div.navbar-start.is-justify-content-space-around.is-flex-grow-1
+      router-link.navbar-item(to="/") Home
+      div.navbar-item.has-dropdown.is-hoverable
+        a.navbar-link#item(href="#") Categorias
+        div.navbar-dropdown.is-boxed#category
+          a.navbar-item#dd-item(href="#") Eletronica
+      a.navbar-item#item(href="#") Promocões
+      a.navbar-item#item(href="#") Contato
+    div.navbar-end(class="menu-login")
+      div.navbar-item
+        div.buttons
+          a.navbar-item#item(href="#") Login
+          a.navbar-item#item(href="#") Cadastre-se
 </template>
 
-
 <script>
-import butttonBarVue from './Navbar/butttonBar.vue';
-
 export default {
-    name: "Navbar",
-    components: {
-        butttonBarVue
-    },
-    data() {
-        return {
-            isOpen: false,
-            navbarItens: ['Novidades', 'Promoçoes']
-        }
-    },
-    methods: {
-        openDropDownMenu(){
-            this.isOpen = !this.isOpen;
-            console.log('aberto')
-        }
-    }
-}
+  data() {
+    return {
+      showBurgerMenu: false,
+    };
+  },
+  name: "Navbar",
+};
 </script>
 
+<style scoped lang="sass">
+#navbar
+  height: 20px
+  background-color: #e7e7e7
+  color: black
+  display: flex
+  flex-direction: row-reverse
+  flex-wrap: wrap
+  align-content: flex-end
 
-<style scoped>
-.navbar {
-    height: 32px;
-    background-color: #d50000;
-    color: black;
-}
+#item
+  border-radius: 9px
+  margin-top: 0
 
-.navbar .category {
-    height: 32px;
-    width: 120px;
-    font-size: 15px;
-    background-color: transparent;
-    border: 0;
-    transition: 0.5s;
-}
+@media screen and (max-width: 1023px)
+ .navbar-menu.is-active 
+    width: 100%
+    position: absolute
+    margin-top: 8%
 
-.navbar .bar {
-    display: flex;
-    justify-content: space-around;
-}
-
-.navbar .category:hover {
-    color: rgb(255, 255, 255);
-    background:  #8e0202;
-}
-
-.navbar .menu-category {
-    display: inline-block;
-    position: absolute;
-    margin-top: 2px;
-    margin-left: 180px;
-    width:max-content;
-    background-color: rgba(235, 4, 4, 0.765);
-    z-index: 1000000;
-}
-
-.navbar ul {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.navbar li {
-    list-style: none;
-    cursor: pointer;
-    padding: 3px;
-    transition: 0.5s;
-
-}
-
-.navbar li:hover{
-    color: rgb(255, 255, 255);
-    background:  #c20505b4;
-}
+@media screen and (min-width: 1024px) 
+  .navbar-burger 
+    display: none
+  
+  .menu-login
+    display: none
 </style>

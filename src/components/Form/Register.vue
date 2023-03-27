@@ -1,76 +1,77 @@
-<template>
-    <article>
-        <div class="container">
-            <div class="user-info">
-                <h3>Criar Conta</h3>
-                <form action="" id="user-data">
-                    <input v-model="name_user" type="text" placeholder="Nome">  
-                    <input v-model="email" type="email" placeholder="Email" >
-                    <input v-model="last_name" type="text" placeholder="Sobrenome">
-                    <input v-model="cpf" type="text" placeholder="Cpf">
-                    <input v-model="password" type="Password" placeholder="Senha">
-                    <input type="Password" placeholder="Confirmar senha">
-                    <input v-model="street" type="text" placeholder="Rua">
-                    <input v-model="city" type="text" placeholder="Cidade">
-                    <input v-model="village" type="text" placeholder="Vila">
-                    <input v-model="cep" type="text" placeholder="Cep">
-                    <input v-model="phone_number" type="text" placeholder="Telefone" />
-                    <div>
-                        <input v-model="phone_type" type="radio" id="raio-input-cell" name="fav_language" value="Cell">
-                        <label for="raio-input">Celular</label>
-                        <input v-model="phone_type" type="radio" id="raio-input-tell" name="fav_language" value="Tell">
-                        <label for="raio-input">Telefone</label>
-                    </div>
-                    <div>
-                        <label for="state">Estado </label>
-                        <select v-model="state">
-                            <option>AC</option>
-                            <option>AL</option>
-                            <option>AP</option>
-                            <option>AM</option>
-                            <option>BA</option>
-                            <option>CE</option>
-                            <option>DF</option>
-                            <option>ES</option>
-                            <option>GO</option>
-                            <option>MA</option>
-                            <option>MT</option>
-                            <option>MS</option>
-                            <option>MG</option>
-                            <option>PA</option>
-                            <option>PB</option>
-                            <option>PR</option>
-                            <option>PB</option>
-                            <option>PI</option>
-                            <option>RJ</option>
-                            <option>RN</option>
-                            <option>RS</option>
-                            <option>RS</option>
-                            <option>RS</option>
-                            <option>SC</option>
-                            <option>SC</option>
-                            <option>SP</option>
-                            <option>SE</option>
-                            <option>TO</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="buttom-reg">
-                <button v-on:click="registerUser($event)">Registrar</button>
-            </div>
-            <div v-show="regiter_error" class="register_error">
-                    <p class="register_error_msg">Todos os campos devem ser preenchidos</p>
-            </div>
-            <div class="link-login">
-                <p>Ja possui cadastra? <a href="/login">ENTRAR</a></p>
-            </div>
-        </div>
-    </article>
+<template lang="pug">
+
+form.box
+    h2.mb-5 Registro de usuario
+    div.is-flex.is-flex-wrap-wrap.is-is-align-content-space-between
+        div.field.mr-5
+            label.label Email
+            div.control
+                input.input(type="email" placeholder="e.g. alex@example.com")
+        div.field.mr-5
+            label.label Senha
+            div.control
+                input.input(type="password" placeholder="********")
+        div.field.mr-5
+            label.label Confirme sua senha 
+            div.control
+                input.input(type="Password" placeholder="Confirmar senha")
+        div.field.mr-5
+            label.label Nome
+            div.control
+                input.input(v-model="name_user" type="text" placeholder="Nome")
+        div.field.mr-5
+            label.label Sobrenome
+            div.control
+                input.input(v-model="last_name" type="text" placeholder="Sobrenome")
+        div.field.mr-5
+            label.label CPF
+            div.control
+                input.input(v-model="cpf" type="text" placeholder="Cpf")
+        div.field.mr-5
+            label.label Rua
+            div.control
+                input.input(v-model="street" type="text" placeholder="Rua")
+        div.field.mr-5
+            label.label Cidade
+            div.control
+                input.input(v-model="city" type="text" placeholder="Cidade")
+        div.field.mr-5
+            label.label Estado
+            div.select.is-small
+                select(v-model="state")
+                    option(v-for="state in this.states" :value="state.value") {{ state.text }} 
+        div.field.mr-5
+            label.label Vila
+            div.control
+                input.input(v-model="village" type="text" placeholder="Vila")
+        div.field.mr-5
+            label.label Cep
+            div.control
+                input.input(v-model="cep" type="text" placeholder="Cep")
+        div.field.mr-5
+            div.control
+            label.label Telefone
+                input.input(v-model="phone_number" type="text" placeholder="Telefone" )
+            div.control
+                input.radio(v-model="phone_type" type="radio" id="raio-input-cell" name="fav_language" value="Cell")
+                label.radio Celular
+                input.radio(v-model="phone_type" type="radio" id="raio-input-cell" name="fav_language" value="Tell")
+                label.radio Telefone
+
+
+    button(v-on:click.prevent="registerUser($event)") Registrar
+    div(v-show="regiter_error" class="register_error")
+        p(class="register_error_msg") Todos os campos devem ser preenchidos
+    div(class="link-login")
+        p Ja possui cadastra? 
+        a(href="/login") ENTRAR
+
 </template>
 
 <script>
 import axios from "axios";
+import states from '../../assets/json/states.js'
+
 
 
 export default {
@@ -90,7 +91,8 @@ export default {
             'state': '',
             'village': '',
             'complement': '',
-            regiter_error: false
+            regiter_error: false,
+            states: states
         }
     },
     methods: {
@@ -122,7 +124,7 @@ export default {
 
             axios.post("http://localhost:8081/users", register_data, { headers: { "Access-Control-Allow-Origin": "*", } })
                 .then((res) => {
-                    this.$router.push({name: 'login'})
+                    this.$router.push({ name: 'login' })
                 })
                 .catch((error) => {
                     console.log(error);
@@ -134,41 +136,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-    position: relative;
-    width: 768px;
-    height: 480px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, .2),
-        0 10px 10px rgba(0, 0, 0, .2);
-    background: linear-gradient(to bottom, #f8f8f8, rgb(118, 118, 118));
-}
-
-h3 {
-    color: #FF4949;
-    text-align: center;
-}
-
-input {
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.container {
-    margin: 0px;
-}
-
-select {
-    width: 50px;
-    height: 25px;
-    border-radius: 5px;
-}
-
-label {
-    font-size: 15px;
-    margin: 5px;
-}
 
 p {
     margin: 20px 0 30px;
@@ -181,6 +148,12 @@ a {
     text-decoration: none;
     margin: 20px 0;
     font-size: 1.1rem;
+}
+
+h2 {
+    color: #FF4949;
+    text-align: center;
+    font-weight: bold;
 }
 
 button {
@@ -205,25 +178,6 @@ button {
     }
 }
 
-.buttom-reg {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-#user-data {
-    display: grid;
-    grid-template-columns: 200px 200px 200px;
-    justify-content: center;
-}
-
-
-.user-info {
-    background-color: blue($color: #000000);
-    width: 768px;
-    height: 310px;
-}
-
 
 .link-login {
     display: flex;
@@ -234,11 +188,10 @@ button {
 
 .register_error_msg {
     font-size: 13px;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 0, 0);
     margin: 0;
     font-weight: bold;
     margin-bottom: 20px;
-    
 }
 
 .register_error{
@@ -246,4 +199,6 @@ button {
     justify-content: center;
     align-content: center;
 }
+
+
 </style>

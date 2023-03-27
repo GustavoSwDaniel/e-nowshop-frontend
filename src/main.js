@@ -15,6 +15,9 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 
 
+require("./assets/main.scss")
+
+
 library.add(faBars, faList, faPeopleLine, faRightFromBracket, faCirclePlus, faArrowsRotate, faUsers, faUser)
 
 

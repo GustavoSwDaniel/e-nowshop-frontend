@@ -1,23 +1,26 @@
-<template lang="pug">
-div(class="main")
-    h2 {{name}}
-    div.splice-container
-        swiper(:modules="modules" :space-between="2" :slides-per-view="4" :navigation="true" :loop="true"
-               :scrollbar={ draggable: true } :autoplay={
-                delay: 7000,
-                disableOnInteraction: false,
-                pauseOnMauseEnter: true
-            } :breakpoints={
-                            50: { slidesPerView: 1, spaceBetween: 20 },
-                            640: { slidesPerView: 2, spaceBetween: 15 },
-                            768: { slidesPerView: 3, spaceBetween: 40 },
-                            1024: { slidesPerView: 4, spaceBetween: 2 },
-                            1720: { slidesPerView: 5, spaceBetween: 2 }
-                            }
-            )
-            swiper-slide(v-for="item in swiperTextBase" :key="item.id")
-                div(class="item")
-                    itemVue(:nameItem="item.productName" :priceItem="item.price" :imageItem="item.image")
+<template>
+    <div class="main">
+        <h2>{{name}}</h2>
+        <div class="splice-container">
+            <swiper :modules="modules" :space-between="2" :slides-per-view="4" :navigation="true" :loop="true"
+                :scrollbar="{ draggable: true }" :autoplay="{
+                    delay: 7000,
+                    disableOnInteraction: false,
+                    pauseOnMauseEnter: true
+                }" :breakpoints="{
+    50: { slidesPerView: 1, spaceBetween: 20 },
+    640: { slidesPerView: 2, spaceBetween: 15 },
+    768: { slidesPerView: 4, spaceBetween: 40 },
+    1024: { slidesPerView: 5, spaceBetween: 2 }}">
+                id: 1,<swiper-slide v-for="item in swiperTextBase" :key="item.id">
+                    <div class="item">
+                        <itemVue :nameItem=item.productName :priceItem="item.price" :imageItem="item.image" />
+                    </div>
+                </swiper-slide>
+
+            </swiper>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -86,6 +89,4 @@ h2 {
     padding-top: 20px;
     padding-bottom: 20px;
 }
-
-
 </style>

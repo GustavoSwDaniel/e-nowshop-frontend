@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-        <RegisterVue :email="email" :name_user="name"/>
+        <RegisterVue/>
     </div>
 </template>
 
