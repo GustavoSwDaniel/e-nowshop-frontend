@@ -9,13 +9,15 @@ div(class='home')
 import HeaderVue from '@/components/Header.vue';
 import HomeContainerVuer from '@/components/HomeContainer/HomeContainer.vue'
 import footerVue from '@/components/footer/footer.vue';
+import loading from '@/components/utils/loading.vue';
 
 export default {
   name: 'HomeView',
   components: {
     HeaderVue,
     HomeContainerVuer,
-    footerVue
+    footerVue,
+    loading
   }
 }
 </script>

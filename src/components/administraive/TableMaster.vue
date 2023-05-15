@@ -11,7 +11,7 @@ import SidebarVue from '@/components/Sidebar/Sidebar.vue';
 import TableProductVue from '@/components/administraive/TableProducts/Table.vue';
 import TableEmployeeVue from '@/components/administraive/TableEmployee/TableEmployee.vue';
 import Cookie from 'js-cookie'
-import axios from "axios";
+import axiosClient from './axiosClient';
 
 
 export default {
@@ -30,7 +30,6 @@ export default {
             userRole: ''
         }
     },
-    emits: ['teste'],
     methods: {
         openComponet(event) {
             if(event.open == 'Product'){
@@ -44,9 +43,8 @@ export default {
         },
         async getUserInfo(){
             let uuit = Cookie.get('uuid')
-            let token = Cookie.get('token')
             try {
-                let response = await axios.get(`http://localhost:8081/employee/${uuit}`, { headers: { "Access-Control-Allow-Origin": "*", 'Authorization': `Authorization ${token}`} })
+                let response = await axiosClient.get(`${process.env.VUE_APP_BASE_BACKEND_URL_ADM}/employee/${uuit}`, { headers: { "Access-Control-Allow-Origin": "*"} })
                 this.fullName = `${response.data.name} ${response.data.last_name}`
                 this.userRole = response.data.position
             }

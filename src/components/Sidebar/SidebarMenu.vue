@@ -17,7 +17,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 li {
     position: relative;
     height: 50px;

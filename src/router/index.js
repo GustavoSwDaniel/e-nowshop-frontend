@@ -36,9 +36,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AdministrativeView.vue'),
     beforeEnter(to, from, next) {
-      console.log(Cookie.get('role'))
       if (!(Cookie.get('token'))) {
-        console.log('test')
         next('/administrative/login')
       }
       next()
@@ -83,6 +81,43 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/itemView.vue')
+  },
+  {
+    path: '/:id/checkout/address',
+    name: 'checkout-address',
+    component: () => import(/* webpackChunkName: "about" */ '../views/checkoutAddressView.vue')
+  },
+  {
+    path: '/checkout/payment',
+    name: 'checkout-payment',
+    component: () => import(/* webpackChunkName: "about" */ '../views/checkoutPayment.vue')
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CarCheckout.vue')
+  },
+  {
+    path: '/:search/s',
+    name: 'search',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SearchView.vue')
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/PaymentView.vue'),
+    props: true
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/ProfileView.vue'),
+    beforeEnter(to, from, next) {
+      if (!(Cookie.get('token'))) {
+        next('/login')
+      }
+      next()
+    }
   }
 ]
 

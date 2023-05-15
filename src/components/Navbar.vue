@@ -21,7 +21,7 @@ nav.navbar(id="navbar" role="navigation" aria-label="main navigation")
       div.navbar-item.has-dropdown.is-hoverable
         a.navbar-link#item(href="#") Categorias
         div.navbar-dropdown.is-boxed#category
-          a.navbar-item#dd-item(href="#") Eletronica
+          a.navbar-item#dd-item(href="#" v-for="item in category" :key="item.name") {{ item.name }}
       a.navbar-item#item(href="#") Promocões
       a.navbar-item#item(href="#") Contato
     div.navbar-end(class="menu-login")
@@ -36,9 +36,20 @@ export default {
   data() {
     return {
       showBurgerMenu: false,
+      category: []
     };
   },
   name: "Navbar",
+  methods: {
+    async getCategory() {
+      let response = await this.$store.dispatch("category/getAllCategory");
+      this.category = response.data;
+    }
+  },
+  async mounted() {
+    await this.getCategory();
+    console.log(this.category);
+  }
 };
 </script>
 

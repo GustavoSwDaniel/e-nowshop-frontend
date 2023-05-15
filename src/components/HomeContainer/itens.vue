@@ -1,23 +1,22 @@
 <template lang="pug">
 div(class="main")
-    h2 {{name}}
-    div.splice-container
-        swiper(:modules="modules" :space-between="2" :slides-per-view="4" :navigation="true" :loop="true"
-               :scrollbar={ draggable: true } :autoplay={
-                delay: 7000,
-                disableOnInteraction: false,
-                pauseOnMauseEnter: true
-            } :breakpoints={
-                            50: { slidesPerView: 1, spaceBetween: 20 },
-                            640: { slidesPerView: 2, spaceBetween: 15 },
-                            768: { slidesPerView: 3, spaceBetween: 40 },
-                            1024: { slidesPerView: 4, spaceBetween: 2 },
-                            1720: { slidesPerView: 5, spaceBetween: 2 }
-                            }
-            )
-            swiper-slide(v-for="item in swiperTextBase" :key="item.id")
-                div(class="item")
-                    itemVue(:nameItem="item.productName" :priceItem="item.price" :imageItem="item.image")
+    div(class="item-title")
+        div(class="title-container")
+            h2 {{name}}
+    div(class="container-items")
+        div.splice-container
+            swiper(:modules="modules" :space-between="1" :slides-per-view="4" :navigation="true" :loop="true"
+                :scrollbar={ draggable: true }  :breakpoints={
+                                50: { slidesPerView: 1, spaceBetween: 1 },
+                                640: { slidesPerView: 1, spaceBetween: 1 },
+                                768: { slidesPerView: 3, spaceBetween: 1 },
+                                1024: { slidesPerView: 4, spaceBetween: 2 },
+                                1720: { slidesPerView: 5, spaceBetween: 4 }
+                                }
+                )
+                swiper-slide(v-for="item in items" :key="item.uuid")
+                    div(class="item")
+                        itemVue(:uuidItem="item.uuid" :nameItem="item.name" :priceItem="item.price" :imageItem="item.image_url")
 </template>
 
 <script>
@@ -36,37 +35,14 @@ export default {
     components: {
         Swiper, SwiperSlide, itemVue
     },
-    props: ['name'],
-
+    props: ['name', 'items'],
     setup() {
-        const swiperTextBase = [
-            {
-                id: 1,
-                productName: "Console Playstation 5 825GB SSD FIFA 23",
-                price: 1400,
-                image: "https://www.pngmart.com/files/7/PS4-PNG-Image.png"
-            },
-            {
-                id: 2,
-                productName: "xbox",
-                price: 1400,
-                image: "https://www.pngmart.com/files/7/PS4-PNG-Image.png"
-            },
-            {
-                id: 3,
-                productName: "3ds",
-                price: 1400,
-                image: "https://www.pngmart.com/files/7/PS4-PNG-Image.png"
-            },
-            {
-                id: 3,
-                productName: "geladeira",
-                price: 1400,
-                image: "https://www.pngmart.com/files/7/PS4-PNG-Image.png"
-            }
-        ]
-        return { modules: [Pagination, Autoplay, Navigation], swiperTextBase }
+        return { modules: [Pagination, Autoplay, Navigation] }
     },
+    created() {
+        console.log('aloo')
+        console.log(this.items)
+    }
 }
 </script>
 
@@ -75,10 +51,30 @@ export default {
 <style lang="scss" scoped>
 #splice-container {
     background-color: #fff;
+    width: 100%;
 }
 
-.main {
-    padding-bottom: 25px;
+.item-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+}
+
+.title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 75%;
+}
+
+
+.container-items{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 
@@ -87,5 +83,32 @@ h2 {
     padding-bottom: 20px;
 }
 
+.item{
+    width: 100%;
+}
+
+.splice-container{
+    width: 75%;
+}
+
+@media screen and (max-width: 1024px) {
+    .item{
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .item{
+        width: 100%;
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .item{
+        width: 90%;
+        display: flex;
+    }
+}
 
 </style>

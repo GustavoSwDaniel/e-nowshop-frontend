@@ -21,4 +21,7 @@ export default {
     padding: 0;
     margin: 0;
   }
+#app{
+  width: 100%;
+}
 </style>

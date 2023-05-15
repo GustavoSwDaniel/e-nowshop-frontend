@@ -1,57 +1,78 @@
-<template>
-    <div class="popup">
-        <div class="popup-inner">
-            <div class="title">
-                <h2>Criar novo Produto</h2>
-            </div>
-            <form class="create-item">
-                <div id="item"> <label>Nome</label>
-                    <input type="text" v-model=this.name placeholder="Name">
-                </div>
-                <div id="item"> <label>Descrição</label>
-                    <input type="text" v-model=this.description placeholder="Descricao">
-                </div>
-                <div id="item"> <label>Preço</label>
-                    <input type="text" v-model=this.price placeholder="Preço">
-                </div>
-                <div id="item"> <label>Quantidade</label>
-                    <input type="text" v-model=this.unity placeholder="Quantidade">
-                </div>
-                <div id="item">
-                    <label>Categorias</label>
-                    <select v-model="categorySelected">
-                        <option v-for="(category, index) in categories" v-bind:key="index" v-bind:value="category">{{ category.name }}</option>
-                    </select>
-                </div>
-                <div id="item">
-                    <label>Envie a imagem do produto</label>
-                    <input type="file" accept="image/*" @change="onFileChange" id="picture-input">
-                </div>
-            </form>
+<template lang="pug">
+div.modal.is-active
+  div.modal-background(style="background-color: rgba(0, 0, 0, 0.5);" @click.self="$emit('close')")
+  div.modal-content(style="max-width: 80%;")
+    header.modal-card-head
+      p.modal-card-title Criar novo produto
+      button.delete(@click="$emit('close')")
+    section.modal-card-body
+      .title
+        h1 Criar novo produto
+      .popup-inner
+        form
+          .field
+            label(for="name") Nome
+            input#name.input(type="text", v-model="this.name", placeholder="Nome do produto")
+          .field
+            label(for="description") Descrição
+            textarea.textarea.is-small.has-fixed-size(class="description" placeholder="descrição", v-model="this.description")
+          .field
+            label(for="price") Preço
+            input#price.input(type="text", v-model="this.price" placeholder="R$")
+          .field
+            label(for="unity") Quantidade
+            input#unity.input(type="text", v-model="this.unity" placeholder="Quantidade")
+          .field
+            label(for="category") Categoria
+            select.input(v-model="categorySelected")
+              option(v-for="category in categories", :value="category") {{category.name}}
+          .field 
+            label(for="image") Imagem
+            input.input(type="file", @change="onFileChange")
+          .field
+            label(for="description") Caracteriscas
+            inputItem(type="caracteriscas" @addCaracteriscas="addCategory")
+          .field 
+            label(for="image") Especificações Técnicas
+            inputItem(type="techniques" @addEspecificacoes="addTechniques")
+          .field 
+            label(for="image") Dimenções do Produto(cm)
+            div(class="columns")
+              div(class="column")
+                input.input(type="text" v-model="dimensions.height" placeholder="Altura")
+              div(class="column")
+                input.input(type="text" v-model="dimensions.width" placeholder="Largura")
+              div(class="column")
+                input.input(type="text" v-model="dimensions.length" placeholder="Comprimento")
+              div(class="column")
+                input.input(type="text" v-model="dimensions.weight" placeholder="Peso")
 
-            <div class="buttons">
-                <button type="button" class="btn-save" @click="createProduct(); TogglePopup()"> 
-                    Salvar
-                </button>
-                <button type="button" class="btn-cancel" @click="TogglePopup()">
-                    Cancelar
-                </button>
-            </div>
-        </div>
-    </div>
+    footer.modal-card-foot
+      button.button.is-success(@click="createProduct()") Salvar
+      button.button.is-danger(@click="$emit('close')") Cancelar
 </template>
 
 <script>
 import axios from "axios";
-
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+import { toast } from 'bulma-toast'
+import inputItem from "./inputItem.vue";
 
 export default {
     name: "CreateProduct",
+    components: {
+      inputItem
+    },
     data() {
         return {
-            categories: '',
+            dimensions: {
+                height: '',
+                width: '',
+                length: '',
+                weight: ''
+            },
+            categories: [],
+            characteristics: [],
+            techniques: [],
             categorySelected: '',
             name: '',
             description: '',
@@ -62,6 +83,17 @@ export default {
     },
     props: ['TogglePopup'],
     methods: {
+        addTechniques(techniques) {
+            console.log(techniques)
+            this.techniques = techniques
+            console.log(this.techniques)
+        },
+
+        addCategory(characteristics) {
+            console.log()
+            this.characteristics = characteristics
+            console.log(this.characteristics)
+        },
         onFileChange(e) {
             this.file = e.target.files[0]
             if (!this.file.length)
@@ -69,7 +101,7 @@ export default {
         },
         async getCategory() {
             try {
-                let response = await axios.get("http://localhost:8081/category", { headers: { "Access-Control-Allow-Origin": "*", } })
+                let response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_PRODUCTS}/category`, { headers: { "Access-Control-Allow-Origin": "*", } })
                 this.categories = response.data
 
             }
@@ -82,13 +114,18 @@ export default {
             formData.append('file', this.file);
             console.log(formData)
             try {
-                let response = await axios.post("http://localhost:8081/uploadfile", formData, { headers: { "Access-Control-Allow-Origin": "*", 'Content-Type': 'multipart/form-data'} })
+                let response = await axios.post(`${process.env.VUE_APP_BASE_BACKEND_URL_PRODUCTS}/uploadfile`, formData, { headers: { "Access-Control-Allow-Origin": "*", 'Content-Type': 'multipart/form-data'} })
                 let image = response.data
                 return image.url_file
 
             }
             catch (error) {
-                this.login_error = true
+              toast({
+                message: "Error in create product",
+                type: 'is-danger',
+                position: 'bottom-left',
+                duration: 3000,
+              })
             };
         },
         async createProduct(){
@@ -100,17 +137,18 @@ export default {
                 price: parseFloat(this.price),
                 unity: parseInt(this.unity),
                 image_url: url_image,
-                category_uuid: this.categorySelected.uuid
+                category_uuid: this.categorySelected.uuid,
+                infos: {
+                    description: this.description,
+                    characteristics: this.characteristics,
+                    techniques: this.techniques,
+                    dimensions: this.dimensions
+                }
             }
 
-
-            axios.post("http://localhost:8081/products", register_data, { headers: { "Access-Control-Allow-Origin": "*", } })
-                .then((res) => {
-                    console.log(res.data)
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            let response = await this.$store.dispatch('products/createProduct', register_data)
+            if (response)
+                this.$emit('close')
         },
     },
     mounted() {
@@ -120,99 +158,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.2);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .popup-inner {
-        background: #FFF;
-        padding: 100px;
-    }
+.modal-card-foot {
+  display: flex;
+  justify-content: center;
 }
 
-#uuid-inp {
-    width: 280px;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2%;
-}
-
-.popup-inner {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-}
-
-#item {
-    display: grid;
-    margin-right: 20%;
-
-
-}
-
-#item-dropdown {
-    display: grid;
-    /* justify-items: center; */
-}
-
-label {
-    display: inline-block;
-}
-
-.btn-save {
-    border-radius: 12px;
-    width: 70px;
-    height: 40px;
-    border-color: #fff;
-    color: #fff;
-    background-color: #006c0b;
-    transition: 0.5s ease-in-out;
-    margin-top: 2%;
-}
-
-
-.btn-cancel {
-    border-radius: 12px;
-    width: 70px;
-    height: 40px;
-    border-color: #fff;
-    color: #fff;
-    background-color: #a10404;
-    transition: 0.5s ease-in-out;
-    margin-top: 2%;
-}
-
-.btn-save:hover {
-    background-color: #00a310;
-}
-
-.btn-cancel:hover {
-    background-color: #b72d2d;
-}
-
-
-.create-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 0px 0px;
+.description{
+  font-size: 1rem;
 }
 </style>

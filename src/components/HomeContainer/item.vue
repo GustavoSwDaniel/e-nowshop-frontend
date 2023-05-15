@@ -1,21 +1,18 @@
 <template lang="pug">
-div.card.ml-2.is-flex.is-flex-direction-column(class="item" @click="changePage($event)")
-    div.card-image
-        figure.image.is-256x256
-            img(:src="imageItem" alt="" id="imgItem")
-            
-    div.content
-        div.is-flex.is-flex-direction-column.is-align-items-start
-            p.title.is-4 {{ nameItem }}
-            star-rating(:rating="2" :read-only="true" :increment="0.01" 
-                    v-bind:star-size="20" :show-rating="false"
-                    active-color="#d50000")
-            div.is-align-items-start.ml-2.mt-5
+div.card.ml-2.is-flex.is-flex-direction-column(class="item" @click="changePage($event, 'product')")
+    div(class="card-item")
+        div(class="image-card")
+            img(:src="imageItem" alt="" id="imgItem" loading="lazy")              
+        div(class="content-item")
+            div(class="rating")
+                star-rating(:rating="2" :read-only="true" :increment="0.01" 
+                        v-bind:star-size="20" :show-rating="false"
+                        active-color="#d50000")
+            div(class="title-container")
+                a(href="#" class="item-number") {{ nameItem }} 
+            div(class="price")
                 p R$ {{ priceItem }}
-        div.container-buttons
-            div(class='buttons')
-                button.button(class="addCardButton" @click="addCard") Add ao carrinho
-                button.button(class="addCardButton") Comprar Agora
+        
 </template>
 
 <script>
@@ -28,6 +25,7 @@ export default {
     },
     props: [
         'title',
+        'uuidItem',
         'nameItem',
         'priceItem',
         'imageItem'
@@ -36,11 +34,10 @@ export default {
         addCard() {
             console.log('addCard')
         },
-        changePage(e) {
+        changePage(e, namePage) {
             e.preventDefault();
-            console.log('changePage')
-            this.$router.push({ name: 'product',
-            params: { id: 1},
+            this.$router.push({ name: namePage,
+            params: { id: this.uuidItem},
             });
         },
     }
@@ -50,11 +47,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.item-number{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
 .item {
     flex: 0 0 calc(100% - 1rem);
     margin-bottom: 1rem;
     height: 29rem;
     cursor: pointer;
+}
+
+.card-item{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.content-item{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: center;
+    margin-left: 2rem;
 }
 
 p {
@@ -66,48 +83,20 @@ p {
     background:#fff;
 }
 
-
-.item #imgItem {
-    width: 100%;
-    height: auto;
-}
-.rating {
-    position: absolute;
-    bottom: 15%;
-    left: 4%;
-}
-.addCardButton {
-    color: white;
-    font-weight: bold;
-    background-color: #c05454;
-    transition: 0.5s;
-    border: none;
-    border-radius: 12px;
-    font-size: 0.90rem;
-    transition: 0.5s ease-in-out
-} 
-
-.addCardButton:hover {
-    color: rgb(190, 190, 190);
+img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.buttons {
+.image-card{
+    height: 50%;
     display: flex;
-    margin-left: 7px;
-    margin-right: 7px;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
-.container-buttons{
-    display: flex;
-    justify-content: space-between
-}
-
-.button:focus{
-    border-color: #ff8989;
-    color: white;
+.title-container{
+    height: 20%;
 }
 
 
@@ -136,10 +125,6 @@ p {
   }
 
 @media screen and (min-width: 769px) and (max-width: 1139px) {
-    .addCardButton {
-        font-size: 0.40em;
-    }
-
     .item {
         flex: 0 0 calc(100% - 1rem);
         margin-bottom: 1rem;
@@ -158,6 +143,14 @@ p {
         font-size: 15px;
     }
   }
+
+@media screen and (max-width: 550px) {
+    .item{
+        flex: 0 0 calc(100% - 1rem);
+        margin-bottom: 1rem;
+        height: 20rem;
+    }
+}
 
 
 </style>

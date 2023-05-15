@@ -1,34 +1,31 @@
-<template>
-    <div class="container">
-        <div class="inner-container">
-            <div class="title">
-                <font-awesome-icon class="users-icon" icon="fa-solid fa-users"  color="#832727" size="6x" />
-                <h1 class="title-tex">Modo de login</h1>
-            </div>
-            <button class="login-manager" @click="changePage('administrative-login')">Login Gerencia</button>
-            <button class="login-employee" @click="changePage('employee-login')">Login funcionario</button>
-        </div>
-    </div>
+<template lang="pug">
+div.container
+  div.box(class="inner-container")
+    .title 
+      h1.title Login Administrativo
+    div.icon-user
+      font-awesome-icon(icon="users" class="users-icon" color="#832727" size="10x")
+    div.buttons
+      button.button.is-danger(@click="changePage('administrative-login')") Login de Gerente
+      button.button.is-danger(@click="changePage('employee-login')") Login as Funcionario
 </template>
-
 
 
 <script>
 export default {
-    
-    name: "ManagerLogin",
-    ata: () => {
-        return {
-            'email': '',
-            'password': '',
-            login_error: false
-        }
-    },
-    methods: {
-        changePage(pageName){
-            this.$router.push({ name: pageName });
-        },
+  name: "ManagerLogin",
+  ata: () => {
+    return {
+      'email': '',
+      'password': '',
+      login_error: false
     }
+  },
+  methods: {
+    changePage(pageName) {
+      this.$router.push({ name: pageName });
+    },
+  }
 }
 </script>
 
@@ -37,72 +34,41 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import url('https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css');
 
-.container{
-    background-color: #6c0000;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.title-tex{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-content: center;
-}
-
-.users-icon{
-    margin-bottom: 6%;
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inner-container {
-    background-color: rgb(255, 255, 255);
-    width: 340px;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-.login-manager, .login-employee{
-    margin-bottom: 2%;
-    background-color: transparent;
-    transition: 0.5s ease-in-out;
-    font-family: 'Poppins', sans-serif;
-    border-color: #6c0000;
-
+.icon-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.login-manager{
-    margin-top: 20%;
-}
-
-.login-employee:hover{
-    background-color:  #6c0000;
-    color: #fff;
-    font-weight: bold;
-}
-
-.login-manager:hover{
-    background-color:  #6c0000;
-    color: #fff;
-    font-weight: bold;
+.buttons{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: stretch;
+  align-content: center;
 }
 
 button {
-    width: 95%;
-    height: 10%;
-    
+  width: 15rem;
 }
-
-
 </style>>

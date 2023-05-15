@@ -1,90 +1,39 @@
-<template>
-	<div class="popup">
-		<div class="popup-inner">
-            <p>Tem certeza que deseja excluir este funcionario?</p>
-            <div class="buttons">
-                <button type="button" class="btn-yes" @click="TogglePopup()">
-                    Sim
-                </button>
-                <button type="button" class="btn-not" @click="TogglePopup()">
-                    Não
-                </button>
-            </div>
-		</div>
-	</div>
+<template lang="pug">
+div.modal.is-active
+  div.modal-background(style="background-color: rgba(0, 0, 0, 0.5);" @click.self="$emit('close')")
+  div.modal-content(style="max-width: 30%;")
+    header.modal-card-head
+      p.modal-card-title Deletar item
+      button.delete(@click="$emit('close')")
+    section.modal-card-body
+      p Tem certeza que deseja excluir este ? 
+      div(class="buttons")
+        button.button.is-success(@click="deleteProducts(uuid_product)") Sim
+        button.button.is-danger(@click.self="$emit('close')") Não
 </template>
-
+    
 <script>
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
 
+import UpdateItemVue from "./UpdateItem.vue";
 
 export default {
-	props: ['TogglePopup'],
-
+  props: ['TogglePopup', 'uuid_product'],
+  components: {
+    UpdateItemVue
+  },
+  methods: {
+    async deleteProducts(uuid_product) {
+      console.log(uuid_product)
+      await this.$store.dispatch('employees/deleteProduct', uuid_product)
+      this.$emit('close')
+    }
+  }
 }
 </script>
-
+    
 <style lang="scss" scoped>
-
-.popup {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 99;
-	background-color: rgba(0, 0, 0, 0.2);
-	
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	.popup-inner {
-		background: #FFF;
-		padding: 32px;
-	}
-}
-
-.popup-inner{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
 .buttons {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-}
-
-
-.btn-yes{
-    border-radius: 12px;
-    width: 70px;
-    height: 40px;
-    border-color: #fff;
-    color: #fff;
-    background-color: #006c0b;
-    transition: 0.5s ease-in-out;
-}
-
-
-.btn-not{
-    border-radius: 12px;
-    width: 70px;
-    height: 40px;
-    border-color: #fff;
-    color: #fff;
-    background-color: #a10404;
-    transition: 0.5s ease-in-out;
-}
-
-
-.btn-yes:hover {
-    background-color: #29a836;
-}
-
-.btn-not:hover {
-    background-color: #e60202;
+  display: flex;
+  justify-content: center;
 }
 </style>

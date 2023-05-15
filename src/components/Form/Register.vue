@@ -6,11 +6,11 @@ form.box
         div.field.mr-5
             label.label Email
             div.control
-                input.input(type="email" placeholder="e.g. alex@example.com")
+                input.input(type="email" v-model="email" placeholder="e.g. alex@example.com")
         div.field.mr-5
             label.label Senha
             div.control
-                input.input(type="password" placeholder="********")
+                input.input(type="password" v-model="password" placeholder="********")
         div.field.mr-5
             label.label Confirme sua senha 
             div.control
@@ -39,11 +39,15 @@ form.box
             label.label Estado
             div.select.is-small
                 select(v-model="state")
-                    option(v-for="state in this.states" :value="state.value") {{ state.text }} 
+                    option(v-for="state in this.states" :value="state.text") {{ state.value }} 
         div.field.mr-5
             label.label Vila
             div.control
                 input.input(v-model="village" type="text" placeholder="Vila")
+        div.field.mr-5
+            label.label Complemento
+            div.control
+                input.input(v-model="complement" type="text" placeholder="Complemento")
         div.field.mr-5
             label.label Cep
             div.control
@@ -121,8 +125,9 @@ export default {
                 },
                 password: this.password
             }
+            console.log(register_data)
 
-            axios.post("http://localhost:8081/users", register_data, { headers: { "Access-Control-Allow-Origin": "*", } })
+            axios.post(`${process.env.VUE_APP_BASE_BACKEND_URL_USER}/users`, register_data, { headers: { "Access-Control-Allow-Origin": "*", } })
                 .then((res) => {
                     this.$router.push({ name: 'login' })
                 })

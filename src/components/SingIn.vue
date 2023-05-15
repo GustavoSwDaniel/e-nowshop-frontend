@@ -42,29 +42,16 @@ export default {
         }
     },
     methods: {
-        userLogin(e){
+        async userLogin(e){
             e.preventDefault();
             const user_data = { username: this.email, password: this.password };
-
-            axios.post("http://localhost:8081/user/auth", user_data, { headers: { "Access-Control-Allow-Origin": "*", } })
-            .then((res) => {
-                this.login_error = false
-                    Cookie.set('token', res.data.access_token)
-                    Cookie.set('refresh_token', res.data.refresh_token)
-                    Cookie.set('expires_in', res.data.expires_in)
-                    Cookie.set('uuid', res.data.uuid)
-                    Cookie.set('name', res.data.name)
-                    this.$router.push({name: 'home'});
-
-            })
-            .catch((error) => {
-                this.login_error = true
-            });
+            let response = await this.$store.dispatch('auth/login', user_data)
+            this.$router.push({name: 'home'});
+            
         },
 
         changePage(e){
             e.preventDefault();
-
             this.$router.push({name: 'Register'});
         }
     }

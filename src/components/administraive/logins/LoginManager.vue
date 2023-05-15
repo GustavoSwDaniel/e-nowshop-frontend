@@ -1,22 +1,29 @@
-<template>
-    <div class="container">
-        <div class="login">
-            <div class="title">
-                <h1>Login de gerente</h1>
-            </div>
-            <div class="inputs">
-                <label >Email</label>
-                <input v-model='email' type="email" placeholder="Email">
-                <label >Senha</label>
-                <input v-model='password' type="password" placeholder="Password">
-                <div v-show="login_error" class="login_erro">
-                    <p class="invalid_user_or_password">Senha ou user invalido</p>
-                </div>
-                <button class="btn-login" v-on:click="MenagerLogin($event)">Entrar</button>
-            </div>
-        </div>
-    </div>
+<template lang="pug">
+div.container
+  div.box(class="inner-container")
+    .title 
+      h1.title Login de Gerente
+    div.icon-user
+      font-awesome-icon(icon="fa-regular fa-user" class="users-icon" color="#832727" size="10x")
+    form
+      .field 
+        label.label Email
+        p.control.has-icons-left
+          input.input(type="email" placeholder="Email" v-model="email")
+          span.icon.is-small.is-left
+            font-awesome-icon(icon="fa-regular fa-envelope" color="#832727")
+      .field
+        label.label Senha
+        p.control.has-icons-left
+          input.input(type="password" placeholder="Senha" v-model="password")
+          span.icon.is-small.is-left
+            font-awesome-icon(icon="fa-solid fa-lock" color="#832727")
+    div.buttons
+      button.button.is-danger(@click="$event => MenagerLogin($event)") Login
+      button.button.is-danger(@click="changePage('switch-login')") Voltar
 </template>
+    
+    
 
 
 
@@ -25,34 +32,37 @@ import Cookie from 'js-cookie'
 import axios from "axios";
 
 export default {
-    name: "ManagerLogin",
-    data: () => {
-        return {
-            'email': '',
-            'password': '',
-            login_error: false
-        }
-    },
-    methods: {
-        MenagerLogin(e){
-            e.preventDefault();
-            const user_data = { username: this.email, password: this.password };
-
-            axios.post("http://localhost:8081/manager/auth", user_data, { headers: { "Access-Control-Allow-Origin": "*", } })
-            .then((res) => {
-                this.login_error = false
-                    Cookie.set('token', res.data.access_token)
-                    Cookie.set('refresh_token', res.data.refresh_token)
-                    Cookie.set('expires_in', res.data.expires_in)
-                    Cookie.set('uuid', res.data.uuid)
-                    Cookie.set('role', 'Menage')
-                    this.$router.push({name: 'administrative'});
-            })
-            .catch((error) => {
-                this.login_error = true
-            });
-        },
+  name: "ManagerLogin",
+  data: () => {
+    return {
+      'email': '',
+      'password': '',
+      login_error: false
     }
+  },
+  methods: {
+    MenagerLogin(e) {
+      e.preventDefault();
+      const user_data = { username: this.email, password: this.password };
+
+      axios.post(`${process.env.VUE_APP_BASE_BACKEND_URL_ADM}/manager/auth`, user_data, { headers: { "Access-Control-Allow-Origin": "*", } })
+        .then((res) => {
+          this.login_error = false
+          Cookie.set('token', res.data.access_token)
+          Cookie.set('refresh_token', res.data.refresh_token)
+          Cookie.set('expires_in', res.data.expires_in)
+          Cookie.set('uuid', res.data.uuid)
+          Cookie.set('role', 'Menage')
+          this.$router.push({ name: 'administrative' });
+        })
+        .catch((error) => {
+          this.login_error = true
+        });
+    },
+    changePage(pageName) {
+      this.$router.push({ name: pageName });
+    },
+  }
 }
 </script>
 
@@ -61,77 +71,34 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import url('https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css');
 
-.container{
-    background-color: #6c0000;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 88px;
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login {
-    background-color: rgb(255, 255, 255);
-    width: 340px;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.inner-container {
+  width: 30rem;
+  height: auto;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-h1{
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 30%;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: stretch;
+  align-content: center;
 }
 
-.inputs{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+button {
+  width: 15rem;
 }
-
-input{
-    margin-bottom: 2%;
-    width:  200px;
-    height: 28px;
-    border-radius: 12px;
-    font-family: 'Poppins', sans-serif;
-}
-
-label{
-    font-family: 'Poppins', sans-serif;
-}
-
-.btn-login{
-    margin-top: 10%;
-    border-radius: 12px;
-    width: 70px;
-    height: 40px;
-    border-color: #fff;
-    color: #fff;
-    background-color: #6c0000;
-    transition: 0.5s ease-in-out;
-
-}
-
-.btn-login:hover{
-    background-color: #ab0000;
-}
-
-.invalid_user_or_password {
-    font-size: 13px;
-    color: red;
-    margin: 0;
-    margin-bottom: 20px;
-    
-}
-
 </style>>
