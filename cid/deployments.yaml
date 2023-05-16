@@ -13,17 +13,17 @@ spec:
         app: enowshop-frontend
     spec:
       containers:
-        - name: enowshop-api-administrative
-          image: gcr.io/enowhop/enowshop-api-administrative:5
+        - name: enowshop-frontend
+          image: gcr.io/enowhop/enowshop-frotend:latest
           ports:
               - containerPort: 3000
           env:
-            - name: A-VUE_APP_BASE_BACKEND_URL
+            - name: A_VUE_APP_BASE_BACKEND_URL
               value: http://35.245.229.86.nip.io
-            - name: A-VUE_APP_BASE_BACKEND_URL_USER
+            - name: A_VUE_APP_BASE_BACKEND_URL_USER
               value: http://35.245.229.86.nip.io/user
-            - name: A-VUE_APP_BASE_BACKEND_URL_PRODUCTS
+            - name: A_VUE_APP_BASE_BACKEND_URL_PRODUCTS
               value: http://35.245.229.86.nip.io/invetory
-            - name: A-VUE_APP_BASE_BACKEND_URL_ADM
+            - name: A_VUE_APP_BASE_BACKEND_URL_ADM
               value: http://35.245.229.86.nip.io/admin
             

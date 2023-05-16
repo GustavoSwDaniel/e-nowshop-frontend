@@ -4,8 +4,8 @@ metadata:
   name: enowshop-frontend-service
 spec:
   selector:
-    app: enowshop-frontend-deployment
+    app: enowshop-frontend
   ports:
   - port: 80
     targetPort: 3000
-  type: LoadBalance
+  type: LoadBalancer

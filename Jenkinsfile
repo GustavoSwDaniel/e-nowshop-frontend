@@ -3,7 +3,7 @@ pipeline {
     environment {
         PROJECT_ID = 'enowhop'
         REGISTRY_URL = "gcr.io/${PROJECT_ID}"
-        IMAGE_NAME = 'enowshop-frontend'
+        IMAGE_NAME = 'enowshop-front'
         TAG_NAME = "${env.BUILD_ID}"
         CREDENTIALS_ID = "enowhop"
         HOSTNAME = "gcr.io"
@@ -32,7 +32,7 @@ pipeline {
         stage('Apply Kubernetes files'){
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig']){ 
-                    sh "kubectl apply -f  ./cid/deployments.yaml"
+                    sh "kubectl apply -f  ./cid/deployments.yaml enowshop-frontend=${HOSTNAME}/${PROJECT_ID}/${IMAGE_NAME}:${TAG_NAME}"
                     sh 'kubectl apply -f ./cid/service.yaml'
                 }
             }
