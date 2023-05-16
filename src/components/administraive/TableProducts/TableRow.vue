@@ -19,8 +19,7 @@ UpdateItemVue(v-if="isOpenUpdateModal", @close="isOpenUpdateModal = false", :uui
 
 
 <script>
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+
 
 import ModalVue from './Modal.vue';
 import UpdateItemVue from "./UpdateItem.vue";
