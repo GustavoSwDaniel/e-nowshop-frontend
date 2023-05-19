@@ -14,20 +14,21 @@ div
           font-awesome-icon(icon="fa-solid fa-arrows-rotate")
       span Atualizar Funcionario
   CreateEmployeeVue(v-if="CreateEmployeeModal", @close="CreateEmployeeModal = false")
-  table.table 
-    thead
-    tr
-      th(class="uuid") uuid                          
-      th Nome 
-      th Sobrenome
-      th Email
-      th Cargo
-      th Data de amição
-      th Ações
-    tbody(v-if="employeesData")
-      TableRowVue(v-for="(item, index) in employeesData.data" v-bind:key="index" :uuid="item.uuid"
-                          :name="item.name" :sobrenome="item.last_name" :email="item.email"
-                          :position="item.position" :admission_date="item.admission_date")
+  div(class="table-container")
+    table.table(class="employee-table")
+      thead
+      tr
+        th(class="uuid") uuid                          
+        th Nome 
+        th Sobrenome
+        th Email
+        th Cargo
+        th Data de amição
+        th Ações
+      tbody(v-if="employeesData")
+        TableRowVue(v-for="(item, index) in employeesData.data" v-bind:key="index" :uuid="item.uuid"
+                            :name="item.name" :sobrenome="item.last_name" :email="item.email"
+                            :position="item.position" :admission_date="item.admission_date")
 </template>
 
 
@@ -78,6 +79,15 @@ export default {
     display: flex;
     justify-content: center;
     margin-bottom: 2%;
+}
+
+.employee-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container{
+  width: 100%;
 }
 
 </style>

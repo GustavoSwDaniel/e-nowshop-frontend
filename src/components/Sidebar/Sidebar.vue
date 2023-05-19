@@ -36,7 +36,9 @@
             </div>
           </div>
         </div>
-        <i v-if="isExitButton" class="bx bx-log-out" id="log_out" @click.stop="$emit('button-exit-clicked')" />
+        <button if="isExitButton" id="log_out" @click="logout()">
+          <font-awesome-icon icon="fa-solid fa-right-from-bracket" size="2x" />
+        </button>
       </div>
     </div>
   </div>
@@ -101,9 +103,16 @@ export default {
           link: '#',
           name: 'Produtos',
           tooltip: 'Dashboard',
-          icon: 'bx-grid-alt',
+          icon: 'bx-basket',
           eventOpen: {open: 'Product'}
         },
+        {
+          link: '#',
+          name: 'Dashboard',
+          tooltip: 'Dashboard',
+          icon: 'bx-grid-alt',
+          eventOpen: {open: 'Dashbord'}
+        }
       ],
     },
   },
@@ -149,6 +158,15 @@ export default {
 
       }
     },
+    logout() {
+      Cookie.remove('token')
+      Cookie.remove('uuid')
+      Cookie.remove('expires_in')
+      Cookie.remove('refresh_token')
+      Cookie.remove('uuid')
+      Cookie.remove('role')
+      this.$router.push({ name: 'switch-login' })
+    }
   },
   watch: {
     isOpened() {
@@ -451,6 +469,10 @@ body {
   line-height: 60px;
   border-radius: 0px;
   transition: all 0.5s ease;
+  color: white;
+  font-weight: bold;
+  border: 0;
+  cursor: pointer;
 }
 
 .sidebar.open .profile #log_out {

@@ -3,6 +3,7 @@
         <SidebarVue @openComponent="openComponet" :profileName="fullName" :profileRole="userRole"/>
         <TableProductVue v-if="isProductOpen" />
         <TableEmployeeVue v-if="isEmployeeOpen"/>
+        <Dashbord v-if="isDashbordOpen"/>
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 import SidebarVue from '@/components/Sidebar/Sidebar.vue';
 import TableProductVue from '@/components/administraive/TableProducts/Table.vue';
 import TableEmployeeVue from '@/components/administraive/TableEmployee/TableEmployee.vue';
+import Dashbord from './dashbord/dashbord.vue';
 import Cookie from 'js-cookie'
 import axiosClient from './axiosClient';
 
@@ -19,12 +21,14 @@ export default {
     components: {
         SidebarVue,
         TableEmployeeVue,
-        TableProductVue
+        TableProductVue,
+        Dashbord
     },
     data() {
         return {
             isProductOpen: false,
             isEmployeeOpen: false,
+            isDashbordOpen: false,
             isRoleManager: false,
             fullName: '',
             userRole: ''
@@ -35,10 +39,17 @@ export default {
             if(event.open == 'Product'){
                 this.isProductOpen = true
                 this.isEmployeeOpen = false
+                this.isDashbordOpen = false
             }
             if(event.open == 'Employee'){
                 this.isProductOpen = false
                 this.isEmployeeOpen = true
+                this.isDashbordOpen = false
+            }
+            if(event.open == 'Dashbord'){
+                this.isDashbordOpen = true
+                this.isProductOpen = false
+                this.isEmployeeOpen = false
             }
         },
         async getUserInfo(){

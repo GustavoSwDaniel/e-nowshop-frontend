@@ -67,14 +67,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/LoginSwitch.vue')
   },
   {
-    path: '/switch/login',
-    name: 'switch-login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginSwitch.vue')
-  },
-  {
     path: '/products/:id',
     name: 'product',
     // route level code-splitting

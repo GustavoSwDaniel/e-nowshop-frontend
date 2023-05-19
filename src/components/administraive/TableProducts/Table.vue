@@ -14,22 +14,23 @@ div
           font-awesome-icon(icon="fa-solid fa-arrows-rotate")
       span Atualizar Produdos
   CreateProductVue(v-if="isOpenCreateModal", @close="isOpenCreateModal = false")
-  table.table 
-    thead
-      tr
-        th image 
-        th(class="uuid") uuid                          
-        th(class="product-name") Nome 
-        th Preço
-        th Quantidade
-        th Data de criação
-        th Avaliação
-        th Categoria
-        th Ações
-    tbody(v-if="productsData")
-      TableRowVue(v-for="(item, index) in productsData.data" v-bind:key="index" :uuid="item.uuid"
-                    :image="item.image_url" :name="item.name" :price="item.price" :unity="item.unity"
-                    :created_at="item.created_at" category="teste" :raiting="1.2" :description="item.description")
+  div(class="table-container")
+    table.table(class="product-table")
+      thead
+        tr
+          th image 
+          th(class="uuid") uuid                          
+          th(class="product-name") Nome 
+          th Preço
+          th Quantidade
+          th Data de criação
+          th Avaliação
+          th Categoria
+          th Ações
+      tbody(v-if="productsData")
+        TableRowVue(v-for="(item, index) in productsData.data" v-bind:key="index" :uuid="item.uuid"
+                      :image="item.image_url" :name="item.name" :price="item.price" :unity="item.unity"
+                      :created_at="item.created_at" category="teste" :raiting="1.2" :description="item.description")
       
 </template>
 
@@ -83,6 +84,14 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 2%;
+}
+
+.table-container{
+  width: 100%;
+}
+
+.product-table{
+  width: 100%;
 }
 
 .title {
