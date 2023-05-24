@@ -19,7 +19,7 @@ const actions = {
     return response
   },
   async getMetrics() {
-    const response = await axios.get(`http://0.0.0.0:8081/metrics`)
+    const response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_METRICS}/metrics`)
     return response
   }
 };
