@@ -7,6 +7,7 @@ import categoryStore from './store/category'
 import employeesStore from './store/employees'
 import checkoutStore from './store/checkout'
 import PaymentStore from './store/payment'
+import DahbordStore from './store/dashbord'
 import { createStore } from 'vuex'
 import PubNub from 'pubnub';
 
@@ -55,7 +56,8 @@ const store = createStore({
         'category': categoryStore,
         'employees': employeesStore,
         'checkout': checkoutStore,
-        'payment': PaymentStore
+        'payment': PaymentStore,
+        'dashbord': DahbordStore
     }
 })
 
