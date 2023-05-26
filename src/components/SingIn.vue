@@ -18,7 +18,7 @@
                     <p class="invalid_user_or_password">Senha ou user invalido</p>
                 </div>
                 <button v-on:click="userLogin($event)">Login</button>
-                <a @click="">Esqueceu sua senha?</a>
+                <a @click="changePageRecovery">Esqueceu sua senha?</a>
             </form>
         </div>
     </article>
