@@ -18,7 +18,7 @@
                     <p class="invalid_user_or_password">Senha ou user invalido</p>
                 </div>
                 <button v-on:click="userLogin($event)">Login</button>
-                <a href="#">Esqueceu sua senha?</a>
+                <a @click="">Esqueceu sua senha?</a>
             </form>
         </div>
     </article>
@@ -50,6 +50,10 @@ export default {
         changePage(e){
             e.preventDefault();
             this.$router.push({name: 'Register'});
+        },
+        changePageRecovery(e){
+            e.preventDefault();
+            this.$router.push({name: 'recovery-email'});
         }
     }
 }
