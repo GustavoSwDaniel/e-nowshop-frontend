@@ -110,6 +110,16 @@ const routes = [
       }
       next()
     }
+  },
+  {
+    path: '/recovery/password/email',
+    name: 'recovery-email',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/RequestRecoveryPassword.vue'),
+  },
+  {
+    path: '/recovery/password/:token',
+    name: 'recovery-password',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/RecoveryPasswordView.vue'),
   }
 ]
 

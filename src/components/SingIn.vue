@@ -25,9 +25,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import Cookie from 'js-cookie'
-
 
 export default {
     name: 'SingIn',
