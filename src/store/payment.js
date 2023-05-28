@@ -14,7 +14,7 @@ const state = {
 
 const actions = {
   async createOrder({ commit }, data){
-    const response = await axiosPayment.post(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/orders`, data)
+    const response = await axios.post(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/orders`, data, {params: params, headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}` }})
     .catch((error) => {
         toast({
           message: "Error in create employee",
