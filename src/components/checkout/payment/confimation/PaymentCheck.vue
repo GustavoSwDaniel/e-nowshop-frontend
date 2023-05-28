@@ -37,6 +37,8 @@ div(id="paymentCheckPage")
 
 <script>
 import CircleCountdown from '@/components/circleCountdown/CircleCountdown.vue';
+import Cookie from 'js-cookie'
+
 
 export default {
   components: {
@@ -45,6 +47,7 @@ export default {
   data: () => {
     return {
       paymentStatus: '',
+      channel: '',
     }
   },
   computed:{
@@ -59,7 +62,7 @@ export default {
     startListening() {
       console.log('start listening')
       this.$pubnub.subscribe({
-        channels: ['ch1'],
+        channels: this.channel,
         withPresence: true
       });
       
@@ -74,6 +77,7 @@ export default {
     }
   },
   mounted() {
+    this.channel = Cookie.get('channelUuid')
     this.startListening()
   }
 }
