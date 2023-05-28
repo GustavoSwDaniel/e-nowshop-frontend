@@ -47,7 +47,6 @@ export default {
   data: () => {
     return {
       paymentStatus: '',
-      channel: '',
     }
   },
   computed:{
@@ -60,9 +59,10 @@ export default {
   },
   methods: {
     startListening() {
+      console.log(Cookie.get('channelUuid'))
       console.log('start listening')
       this.$pubnub.subscribe({
-        channels: this.channel,
+        channels: Cookie.get('channelUuid'),
         withPresence: true
       });
       
@@ -70,6 +70,7 @@ export default {
         message: message => {
           this.msg = message.message.texto;
           if (this.msg === 'approved') {
+            console.log('approved')
             this.paymentStatus = 'success'
             this.$pubnub.removeListener(listener);
         }
@@ -77,7 +78,6 @@ export default {
     }
   },
   mounted() {
-    this.channel = Cookie.get('channelUuid')
     this.startListening()
   }
 }

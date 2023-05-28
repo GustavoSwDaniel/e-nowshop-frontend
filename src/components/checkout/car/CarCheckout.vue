@@ -1,8 +1,4 @@
 <template lang="pug">
-div
-  ol 
-    li(v-for="msg in ch1") {{msg.message}}
-  button(@click="startListening") push
 loading(v-if="loading")
 div(class="main-container")
   div(class="steps")
