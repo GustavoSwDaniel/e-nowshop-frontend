@@ -62,7 +62,7 @@ export default {
       console.log(Cookie.get('channelUuid'))
       console.log('start listening')
       this.$pubnub.subscribe({
-        channels: Cookie.get('channelUuid'),
+        channels: [Cookie.get('channelUuid')],
         withPresence: true
       });
       
