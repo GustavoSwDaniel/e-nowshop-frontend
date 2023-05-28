@@ -76,8 +76,8 @@ library.add(faBars, faList, faPeopleLine, faRightFromBracket,
     faEnvelopeSolid, faBasketShopping, faGear, faMagnifyingGlass)
 
 const pubnub = new PubNub({
-    publishKey: 'pub-c-2262e483-28a5-4dee-bdeb-955a13403cd1',
-    subscribeKey: 'sub-c-75d86332-d703-4506-8bcf-a007b45f8138',
+    publishKey: 'pub-c-b572a862-efaa-4b28-9462-82d0cb72a57c',
+    subscribeKey: 'sub-c-47cab205-d6cf-4e9f-91a7-bbb42cc8544c',
     uuid: 'test',
 });
 
