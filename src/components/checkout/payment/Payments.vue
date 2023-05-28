@@ -87,8 +87,8 @@ export default {
       btn.classList.add('is-loading')
 
       this.orderResponse = await this.$store.dispatch('payment/createOrder', this.orderInfos)
-      this.openPaymentModal = true
       this.changePage('payment')
+      Cookie.set('order', JSON.stringify(this.orderResponse.channel_uuid))
       btn.classList.remove('is-loading')
     },
     changePage(namePage) {
