@@ -69,7 +69,7 @@ export default {
       this.$pubnub.addListener({
         message: message => {
           this.msg = message.message.texto;
-          if (this.msg === 'success') {
+          if (this.msg === 'approved') {
             this.paymentStatus = 'success'
             this.$pubnub.removeListener(listener);
         }
