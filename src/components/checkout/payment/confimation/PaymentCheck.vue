@@ -69,6 +69,7 @@ export default {
       this.$pubnub.addListener({
         message: message => {
           this.msg = message.message.texto;
+          console.log(this.msg)
           if (this.msg === 'approved') {
             console.log('approved')
             this.paymentStatus = 'success'
