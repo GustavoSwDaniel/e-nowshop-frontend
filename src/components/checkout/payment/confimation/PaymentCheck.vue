@@ -75,7 +75,6 @@ export default {
         message: message => {
           this.msg = message.message;
           console.log(this.msg)
-          this.msg = JSON.parse(this.msg.replace(/'/g, '"'))
           if (this.msg.status === 'approved') {
             console.log('approved')
             this.paymentStatus = 'success'
