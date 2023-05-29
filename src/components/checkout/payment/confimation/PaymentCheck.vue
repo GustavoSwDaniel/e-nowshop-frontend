@@ -17,7 +17,7 @@ div(id="paymentCheckPage")
             button(class="button-copy-paste" )
               font-awesome-icon(class="icon-copy-paste" icon="fa-solid fa-copy" size="2x" )
       div(class="segundary-container")
-        div(class="countdown-container")
+        div(class="countdown-container" v-if="paymentStatus === ''")
           p.title.is-4 Seu pagamento sera confirmado em 5 minutos
           CircleCountdown(@timeIsUp="checkPayment")
         div(class="payment-status")
@@ -25,7 +25,8 @@ div(id="paymentCheckPage")
             svg(version="1.1", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 130.2 130.2")
               circle(class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1")
               polyline(class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5")
-            p.success Oh Yeah!
+            p.success Pagamento realizado com sucesso!
+            p.success Aguarde a confirmação no seu email
           div(class="error" v-else-if="paymentStatus === 'error'")
             svg(version="1.1", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 130.2 130.2")
               circle(class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1")
@@ -46,6 +47,7 @@ export default {
   },
   data: () => {
     return {
+      msg: '',
       paymentStatus: '',
     }
   },
@@ -63,22 +65,27 @@ export default {
       console.log('start listening')
       this.$pubnub.subscribe({
         channels: [Cookie.get('channelUuid')],
-        withPresence: true
       });
       
       this.$pubnub.addListener({
         message: message => {
-          this.msg = message.message.texto;
-          console.log(this.msg)
-          if (this.msg === 'approved') {
+          this.msg = message.message;
+          this.msg = JSON.parse(this.msg.replace(/'/g, '"'))
+          if (this.msg.status === 'approved') {
             console.log('approved')
             this.paymentStatus = 'success'
+            console.log(this.paymentStatus)
+            this.$pubnub.removeListener(listener);
+          } else if (this.msg.status === 'failed') {
+            console.log('failed')
+            this.paymentStatus = 'error'
+            console.log(this.paymentStatus)
             this.$pubnub.removeListener(listener);
         }
       }}); 
     }
   },
-  mounted() {
+  created() {
     this.startListening()
   }
 }
