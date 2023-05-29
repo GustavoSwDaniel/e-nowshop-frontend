@@ -88,7 +88,7 @@ export default {
 
       this.orderResponse = await this.$store.dispatch('payment/createOrder', this.orderInfos)
       this.changePage('payment')
-      Cookie.set('channelUuid', JSON.stringify(this.orderResponse.channel_uuid))
+      Cookie.set('channelUuid', this.orderResponse.channel_uuid)
       btn.classList.remove('is-loading')
     },
     changePage(namePage) {
