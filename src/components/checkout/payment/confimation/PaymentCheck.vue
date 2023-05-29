@@ -63,8 +63,10 @@ export default {
     startListening() {
       console.log(Cookie.get('channelUuid'))
       console.log('start listening')
+      const channels = [];
+      channels.push(Cookie.get('channelUuid'))
       this.$pubnub.subscribe({
-        channels: [Cookie.get('channelUuid')],
+        channels: channels,
       });
       
       this.$pubnub.addListener({
