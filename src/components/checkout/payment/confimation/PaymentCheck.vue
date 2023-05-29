@@ -65,13 +65,16 @@ export default {
       console.log('start listening')
       const channels = [];
       channels.push(Cookie.get('channelUuid'))
+      console.log(channels)
       this.$pubnub.subscribe({
         channels: channels,
+        withPresence: true
       });
       
       this.$pubnub.addListener({
         message: message => {
           this.msg = message.message;
+          console.log(this.msg)
           this.msg = JSON.parse(this.msg.replace(/'/g, '"'))
           if (this.msg.status === 'approved') {
             console.log('approved')
