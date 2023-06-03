@@ -2,7 +2,7 @@
 div(class="search-page" @click="closeDropdown")
     div.box(class="search-container")
         div(class="search-term")
-            p.title Você pesquisou por: Moveis
+            p.title Você pesquisou por: {{ search }}
         div(class="container-itens")
             div(class="container-header")
                 div(class="itens-count")
@@ -28,6 +28,8 @@ div(class="search-page" @click="closeDropdown")
 
 <script>
 import itemVue from '@/components/Search/item.vue';
+import { useRoute } from 'vue-router'
+
 
 export default {
     components: {
@@ -107,7 +109,11 @@ export default {
         searchResult: []
     }),
     async mounted() {
-        this.searchResult = await this.$store.dispatch('products/getNewProducts', { filter: 'created_at', order: 'desc', limit: 10} )
+        const route = useRoute()
+        this.search = route.params.search
+        console.log(this.search)
+        console.log('salllll')
+        this.searchResult = await this.$store.dispatch('products/getNewProducts', { filter: 'created_at', order: 'desc', limit: 10, name: this.search} )
         this.searchResult = this.searchResult.data
     }
 }
