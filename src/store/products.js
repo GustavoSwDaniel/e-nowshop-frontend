@@ -26,8 +26,11 @@ const actions = {
     let params = {
       "order_by": data.filter,
       "order": data.order,
-      "limit": data.limit
+      "limit": data.limit,
+      "name": data.name
     }
+
+    console.log(params)
     const response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_PRODUCTS}/products`, { params: params })
     .catch((error) => {
       toast({

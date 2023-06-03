@@ -194,10 +194,9 @@ body {
 }
 
 .sidebar {
-  position: relative;
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   height: 100%;

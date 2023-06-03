@@ -90,7 +90,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/CarCheckout.vue')
   },
   {
-    path: '/:search/s',
+    path: '/:search/search',
     name: 'search',
     component: () => import(/* webpackChunkName: "about" */ '../views/SearchView.vue')
   },
@@ -104,12 +104,17 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: () =>  import(/* webpackChunkName: "about" */ '../views/ProfileView.vue'),
-    beforeEnter(to, from, next) {
-      if (!(Cookie.get('token'))) {
-        next('/login')
-      }
-      next()
-    }
+    
+  },
+  {
+    path: '/profile/address',
+    name: 'profile-address',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/ProfileAddressView.vue'),
+  },
+  {
+    path: '/profile/orders',
+    name: 'profile-orders',
+    component: () =>  import(/* webpackChunkName: "about" */ '../views/ProfileOrdersView.vue'),
   },
   {
     path: '/recovery/password/email',

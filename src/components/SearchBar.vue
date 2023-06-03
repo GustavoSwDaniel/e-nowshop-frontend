@@ -2,7 +2,7 @@
 div(class="search")
   div(class="search-input-div")
     input(class="search-input" type="text" v-model="query" @input="searchItems" placeholder="Pesquisar" ref="searchInput" )
-    button.button(class="search-button" type="submit" @click="searchItems")
+    button.button(class="search-button" type="submit" @click.prevent="getSearch")
       font-awesome-icon(icon="fa-solid fa-magnifying-glass")
   div(class="results")
     ul(v-if="showResults")
@@ -42,6 +42,11 @@ export default {
     showResults: true
   }),
   methods: {
+    async getSearch(){
+      this.$router.push({ name: 'search',
+            params: { search: this.query},
+          });
+    },
     handleClickOutside(event) {
       if (!this.$refs.searchInput.contains(event.target)) {
         this.showResults = false

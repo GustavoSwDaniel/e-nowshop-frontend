@@ -8,9 +8,11 @@ import employeesStore from './store/employees'
 import checkoutStore from './store/checkout'
 import PaymentStore from './store/payment'
 import DahbordStore from './store/dashbord'
+import OrderStore from './store/order'
 import Users from './store/user'
 import { createStore } from 'vuex'
 import PubNub from 'pubnub';
+
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,7 +61,8 @@ const store = createStore({
         'checkout': checkoutStore,
         'payment': PaymentStore,
         'dashbord': DahbordStore,
-        'user': Users
+        'user': Users,
+        'orders': OrderStore
     }
 })
 

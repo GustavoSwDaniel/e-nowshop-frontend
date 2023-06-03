@@ -25,7 +25,7 @@ div.modal.is-active
           .field
             label(for="category") Estado
             select.input(v-model="this.registerAddress['village']")
-              option(v-for="state in states", :value="state.value") {{state.text}}
+              option(v-for="state in states", :value="state.value") {{state.value}}
           .field
             label(for="unity") Complemento
             input#unity.input(type="text", v-model="this.registerAddress['complement']" placeholder="Complemento")

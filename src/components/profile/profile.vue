@@ -29,7 +29,7 @@ div(class='main-container')
         div(class="title-order")
             p.title  Outra informações    
         div(class='informations')
-            a(class="info-itens" href="/profile/orders")
+            a(class="info-itens" @click="changePage('profile-orders')")
                 div.box(class='iten')
                     font-awesome-icon(icon="fa-solid fa-basket-shopping" size="2x" color="#832727")
                     p Meus pedidos
@@ -54,6 +54,11 @@ export default {
     }),
     mounted() {
         this.name = Cookie.get('name')
+    },
+    methods: {
+        changePage(pageName) {
+            this.$router.push({ name: pageName });
+        },
     }
 
 }
@@ -61,27 +66,27 @@ export default {
 
 
 <style lang="scss" scoped>
-
 .main-profile {
     display: flex;
     align-items: center;
 }
 
-.settings{
+.settings {
     margin-left: 1rem;
 }
 
-.informations{
+.informations {
     display: flex;
     width: 100%;
 }
 
-.info-itens{
+.info-itens {
     width: 50%;
     text-decoration: none;
     color: black;
 }
-.iten{
+
+.iten {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,25 +95,30 @@ export default {
     height: 200px;
     margin-right: 1rem;
 }
-#address{
+
+#address {
     margin-right: 0;
     margin-left: 1rem;
 }
-.email-text{
+
+.email-text {
     margin-left: 1rem;
 }
-.email{
+
+.email {
     display: flex;
     align-items: center;
 }
 
-.order-text{
+.order-text {
     margin-left: 1rem;
 }
-.title-order{
+
+.title-order {
     display: flex;
     margin-left: 1rem;
 }
+
 .main-container {
     display: flex;
     flex-direction: row;
@@ -132,7 +142,8 @@ export default {
     width: 68%;
 
 }
-.status{
+
+.status {
     font-weight: bold;
 }
 
@@ -140,9 +151,13 @@ export default {
     max-height: 100%;
 }
 
-table, tr, td, th{
+table,
+tr,
+td,
+th {
     padding: 10px;
     margin: auto;
     border: none;
 }
+
 </style>
