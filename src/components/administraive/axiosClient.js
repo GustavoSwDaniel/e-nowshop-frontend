@@ -7,6 +7,7 @@ const axiosClient = axios.create();
 
 axiosClient.interceptors.response.use(undefined, (error) => {
   if (error.response.status === 401 || error.response.status === 403) {
+    console.log('alo3')
     router.push({ name: 'switch-login' })
   }
 });
@@ -14,6 +15,7 @@ axiosClient.interceptors.response.use(undefined, (error) => {
 axiosClient.interceptors.request.use(config => {
   const token = Cookie.get('token')
   if (token) {
+    console.log('alo2')
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

@@ -81,11 +81,11 @@ const actions = {
     return response.data
   },
   async getLenCart(_, data){
-    let response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${data.token}`}})
+    let response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/lenght`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${data.token}`}})
     .catch((error) => {
         return Promise.reject(error.data)
       })
-      return response.data.items.length
+      return response.data.lenght
     },
   async removeItem(_, data){
     let response = await axios.delete(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${data.token}`}})

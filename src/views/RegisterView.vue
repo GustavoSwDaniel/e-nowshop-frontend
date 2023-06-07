@@ -1,32 +1,26 @@
-<template>
-    <div id="main">
-        <RegisterVue/>
-    </div>
+<template lang="pug">
+div(id="main")
+  HeaderVue(:bannerIsVisible='false')
+  RegisterVue
 </template>
 
 <script>
 import RegisterVue from '@/components/Form/Register.vue';
+import HeaderVue from '@/components/Header.vue';
+
+
 export default {
     name: 'Register',
     components: {
-        RegisterVue
+        RegisterVue,
+        HeaderVue
     }
   }
 </script>
 
 <style lang="scss">
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  #main {
-    font-family: Tahoma;
-    font-size: 1.6rem;
-    color: #222;
-    background-color: #092525;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+body {
+  margin: 0;
+  padding: 0;
+}
 </style>
