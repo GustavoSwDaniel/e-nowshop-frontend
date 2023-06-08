@@ -103,7 +103,7 @@ const actions = {
     let payload ={
       quantity: data.quantity
     }
-    let response = await axiosCheckout.put(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/${data.uuid}/item/${data.product_uuid}`, payload, {headers: {"Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}` }})
+    let response = await axiosCheckout.put(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/item/${data.product_uuid}`, payload, {headers: {"Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}` }})
     .catch((error) => {
         toast({
           message: "Error in add item in cart",
