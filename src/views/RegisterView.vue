@@ -1,5 +1,5 @@
 <template lang="pug">
-div(id="main")
+div
   HeaderVue(:bannerIsVisible='false')
   RegisterVue
 </template>
