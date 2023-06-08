@@ -68,7 +68,11 @@ const actions = {
     return response.data
   },
   async addCart(_, data){
-    let response = await axiosCheckout.put(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car`, data, {headers: { "Authorization": `Bearer ${Cookie.get('token')}` }})
+    let item = {
+      product_uuid: data.uuid
+    }
+    console.log(data)
+    let response = await axiosCheckout.put(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car`, item, {headers: {"Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}` }})
     .catch((error) => {
         toast({
           message: "Error in add item in cart",
@@ -81,19 +85,36 @@ const actions = {
     return response.data
   },
   async getLenCart(_, data){
-    let response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/lenght`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${data.token}`}})
+    let response = await axios.get(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/lenght`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}`}})
     .catch((error) => {
         return Promise.reject(error.data)
       })
       return response.data.lenght
     },
   async removeItem(_, data){
-    let response = await axios.delete(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${data.token}`}})
+    let response = await axios.delete(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/item/${data.uuid}`, {headers: { "Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}`}})
     .catch((error) => {
       return Promise.reject(error.data)
     })
     return response
-  }
+  },
+  async updateQuantity(_, data){
+    console.log(data)
+    let payload ={
+      quantity: data.quantity
+    }
+    let response = await axiosCheckout.put(`${process.env.VUE_APP_BASE_BACKEND_URL_ORDER}/car/${data.uuid}/item/${data.product_uuid}`, payload, {headers: {"Access-Control-Allow-Origin": "*", "Authorization": `Bearer ${Cookie.get('token')}` }})
+    .catch((error) => {
+        toast({
+          message: "Error in add item in cart",
+          type: 'is-danger',
+          position: 'bottom-left',
+          duration: 3000,
+        })
+        return Promise.reject(error.data)
+      })
+    return response.data
+  },
 };
 
 export default {

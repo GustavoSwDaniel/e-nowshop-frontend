@@ -62,7 +62,7 @@ div(class="main-container")
                 div(class="quantity")
                   p.title {{item.quantity_car}}
                 div(class="arrow-right")
-                  button(class="arrow-button" @click="incrementQuantity(item)")
+                  button(class="arrow-button" @click.prevent="incrementQuantity(item)")
                     font-awesome-icon(icon="fa-solid fa-chevron-right" size="1x" )
               div(class="trash-button")
                 button(class="trash" @click="removeItem(item)")
@@ -144,11 +144,21 @@ export default {
   methods: {
     async incrementQuantity(item) {
       item.quantity_car += 1
-      this.products.forEach((product) => {
-        if (product.uuid === item.uuid) {
-          product.quantity += 1
+      console.log('incrementQuantity')
+      for (let i = 0; i < this.itens.items.length; i++) {
+        console.log(this.itens.items[i].uuid)
+        if (this.itens.items[i].uuid === item.uuid) {
+          this.itens.items[i].quantity += 1
+          let data = {
+            user_uuid: this.itens.user_uuid,
+            product_uuid: item.uuid,
+            quantity: item.quantity_car
+
+          }
+          await this.$store.dispatch('checkout/updateQuantity', data)
         }
-      })
+      }
+      console.log('end incrementQuantity')
       await this.calcFrete()
     },
     sumFrete(frete) {
@@ -424,6 +434,7 @@ export default {
   flex-direction: row-reverse;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .trash-icon {
